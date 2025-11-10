@@ -24,8 +24,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-
 /**
  * Represents an implementation of {@link WorkerIdAssigner}, 
  * the worker id will be discarded after assigned to the UidGenerator
@@ -35,8 +33,11 @@ import javax.annotation.Resource;
 public class DisposableWorkerIdAssigner implements WorkerIdAssigner {
     private static final Logger LOGGER = LoggerFactory.getLogger(DisposableWorkerIdAssigner.class);
 
-    @Resource
-    private WorkerNodeDAO workerNodeDAO;
+    private final WorkerNodeDAO workerNodeDAO;
+
+    public DisposableWorkerIdAssigner(WorkerNodeDAO workerNodeDAO) {
+        this.workerNodeDAO = workerNodeDAO;
+    }
 
     /**
      * Assign worker id base on database.<p>
